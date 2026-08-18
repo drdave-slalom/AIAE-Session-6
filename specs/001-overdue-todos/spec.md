@@ -48,7 +48,14 @@ A user completes a task that was past its due date and expects it to no longer b
 - A todo whose due date is exactly today is treated as NOT overdue (the user still has the full day to complete it).
 - A todo with no due date is never overdue.
 - A todo that is completed is never shown as overdue, regardless of its due date.
-- The overdue determination is based on the current date at the time the list is viewed, so a todo can become overdue as the calendar date advances without any user action.
+- The overdue determination is based on the current date at the time the list is viewed, so a todo can become overdue as the calendar date advances without any user action. The indicator is recomputed on each load and on user interactions (on the next render); no background timer re-evaluates an already-rendered list at midnight.
+
+## Clarifications
+
+### Session 2026-08-18
+
+- Q: What visual form should the overdue indicator take on each overdue todo in the list? → A: Icon (e.g., warning icon) with `aria-label` plus accent color styling.
+- Q: When a todo becomes overdue purely because the calendar date advanced while the list is open, when must the overdue indicator appear? → A: Recompute on load and on user interactions; no background timer (updates on next render).
 
 ## Requirements *(mandatory)*
 
@@ -59,8 +66,8 @@ A user completes a task that was past its due date and expects it to no longer b
 - **FR-003**: System MUST treat a todo with no due date as NOT overdue.
 - **FR-004**: System MUST treat any completed todo as NOT overdue, regardless of its due date.
 - **FR-005**: System MUST visually distinguish overdue todos from non-overdue todos in the list so users can identify them at a glance.
-- **FR-006**: The overdue visual distinction MUST convey the overdue state through more than color alone so it remains perceivable to users who cannot distinguish colors.
-- **FR-007**: System MUST reflect changes to a todo's overdue state immediately when its completion status or due date changes.
+- **FR-006**: The overdue visual distinction MUST convey the overdue state through more than color alone by displaying an icon (e.g., a warning icon) with a descriptive `aria-label` alongside accent-color styling, so it remains perceivable to users who cannot distinguish colors.
+- **FR-007**: System MUST reflect changes to a todo's overdue state immediately when its completion status or due date changes, and MUST recompute overdue state on each list load and user interaction; no background timer is required to re-evaluate an already-rendered list as the calendar date advances.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -73,7 +80,7 @@ A user completes a task that was past its due date and expects it to no longer b
 - **SC-001**: A user can identify every overdue todo in a list of mixed items in under 5 seconds without inspecting individual due dates.
 - **SC-002**: 100% of incomplete todos with a due date before the current date are marked as overdue, and 0% of todos due today, due in the future, without a due date, or completed are marked as overdue.
 - **SC-003**: When a user completes an overdue todo, the overdue indicator disappears immediately upon the status change.
-- **SC-004**: The overdue indicator is perceivable to users who rely on non-color cues (e.g., text or iconography), meeting accessibility contrast and non-color-dependency expectations.
+- **SC-004**: The overdue indicator is perceivable to users who rely on non-color cues via an icon with a descriptive `aria-label`, meeting accessibility contrast and non-color-dependency expectations.
 
 ## Assumptions
 
