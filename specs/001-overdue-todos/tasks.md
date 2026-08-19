@@ -29,7 +29,7 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 **Purpose**: Prepare the frontend structure for the new shared utility
 
-- [ ] T001 Create the `utils/` directory and its test folder in `packages/frontend/src/utils/` and `packages/frontend/src/utils/__tests__/` (per plan.md project structure)
+- [X] T001 Create the `utils/` directory and its test folder in `packages/frontend/src/utils/` and `packages/frontend/src/utils/__tests__/` (per plan.md project structure)
 
 ---
 
@@ -41,11 +41,11 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 ### Tests for Foundational (write FIRST, ensure they FAIL before implementation) ⚠️
 
-- [ ] T002 [P] Write unit tests for `isOverdue(todo, now)` in `packages/frontend/src/utils/__tests__/isOverdue.test.js` covering all behavior-table rows from `contracts/overdue-ui.md`: (1) incomplete + due yesterday → true, (2) incomplete + due today → false, (3) incomplete + due tomorrow → false, (4) incomplete + null/empty dueDate → false, (5) completed + due yesterday → false, (6) completed + today/future/null → false, (7) invalid/unparseable dueDate → false, (8) null/undefined todo → false. Inject a fixed `now` reference date for determinism.
+- [X] T002 [P] Write unit tests for `isOverdue(todo, now)` in `packages/frontend/src/utils/__tests__/isOverdue.test.js` covering all behavior-table rows from `contracts/overdue-ui.md`: (1) incomplete + due yesterday → true, (2) incomplete + due today → false, (3) incomplete + due tomorrow → false, (4) incomplete + null/empty dueDate → false, (5) completed + due yesterday → false, (6) completed + today/future/null → false, (7) invalid/unparseable dueDate → false, (8) null/undefined todo → false. Inject a fixed `now` reference date for determinism.
 
 ### Implementation for Foundational
 
-- [ ] T003 Implement pure function `isOverdue(todo, now = new Date())` in `packages/frontend/src/utils/isOverdue.js`: return `true` only when `todo` is present, `!todo.completed` (truthy check), `todo.dueDate` is a parseable date, and the due calendar date (local midnight) is strictly before `now`'s calendar date; guard clauses return `false` for missing todo, missing/invalid `dueDate`, or completed todos (FR-001–FR-004, FR-007; data-model.md derivation + date-normalization rules)
+- [X] T003 Implement pure function `isOverdue(todo, now = new Date())` in `packages/frontend/src/utils/isOverdue.js`: return `true` only when `todo` is present, `!todo.completed` (truthy check), `todo.dueDate` is a parseable date, and the due calendar date (local midnight) is strictly before `now`'s calendar date; guard clauses return `false` for missing todo, missing/invalid `dueDate`, or completed todos (FR-001–FR-004, FR-007; data-model.md derivation + date-normalization rules)
 
 **Checkpoint**: `isOverdue` unit tests pass; utility ready for use by `TodoCard`
 
@@ -59,12 +59,12 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 ### Tests for User Story 1 (write FIRST, ensure they FAIL before implementation) ⚠️
 
-- [ ] T004 [P] [US1] Add `TodoCard` overdue-rendering tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: an incomplete todo due yesterday renders a warning icon with `aria-label="Overdue"` and the `todo-card--overdue` class; incomplete todos due today, due tomorrow, and with no due date render NO overdue icon and NO overdue class. Use a fixed reference date for determinism (FR-002/FR-003/FR-005/FR-006).
+- [X] T004 [P] [US1] Add `TodoCard` overdue-rendering tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: an incomplete todo due yesterday renders a warning icon with `aria-label="Overdue"` and the `todo-card--overdue` class; incomplete todos due today, due tomorrow, and with no due date render NO overdue icon and NO overdue class. Use a fixed reference date for determinism (FR-002/FR-003/FR-005/FR-006).
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Modify `packages/frontend/src/components/TodoCard.js` to import `isOverdue` from `../utils/isOverdue`, compute overdue state at render time, and when true render a warning icon (`⚠`) with `aria-label="Overdue"` and apply the `todo-card--overdue` class; when false render neither (FR-005, FR-006; contracts/overdue-ui.md component contract)
-- [ ] T006 [P] [US1] Add the `.todo-card--overdue` rule in `packages/frontend/src/App.css` (where the existing `.todo-card` rules live) using the existing `--danger-color` design token defined in `packages/frontend/src/styles/theme.css`, supporting light and dark themes with WCAG AA contrast (FR-005, FR-006, SC-004)
+- [X] T005 [US1] Modify `packages/frontend/src/components/TodoCard.js` to import `isOverdue` from `../utils/isOverdue`, compute overdue state at render time, and when true render a warning icon (`⚠`) with `aria-label="Overdue"` and apply the `todo-card--overdue` class; when false render neither (FR-005, FR-006; contracts/overdue-ui.md component contract)
+- [X] T006 [P] [US1] Add the `.todo-card--overdue` rule in `packages/frontend/src/App.css` (where the existing `.todo-card` rules live) using the existing `--danger-color` design token defined in `packages/frontend/src/styles/theme.css`, supporting light and dark themes with WCAG AA contrast (FR-005, FR-006, SC-004)
 
 **Checkpoint**: User Story 1 fully functional — overdue incomplete todos are visually distinguished and testable independently (MVP complete)
 
@@ -78,11 +78,11 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 ### Tests for User Story 2 (write FIRST, ensure they FAIL before implementation) ⚠️
 
-- [ ] T007 [P] [US2] Add `TodoCard` transition tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: a completed todo with a past due date renders NO overdue indicator; re-rendering the same past-due todo with `completed` toggled true→removes the indicator and false→restores it; additionally, re-rendering an incomplete todo whose `dueDate` changes from today/future to a past date adds the indicator (and changing it back to today/future/null removes it), covering FR-007's due-date recompute path (FR-004, FR-007, SC-003, US2 acceptance scenarios #1–#3)
+- [X] T007 [P] [US2] Add `TodoCard` transition tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: a completed todo with a past due date renders NO overdue indicator; re-rendering the same past-due todo with `completed` toggled true→removes the indicator and false→restores it; additionally, re-rendering an incomplete todo whose `dueDate` changes from today/future to a past date adds the indicator (and changing it back to today/future/null removes it), covering FR-007's due-date recompute path (FR-004, FR-007, SC-003, US2 acceptance scenarios #1–#3)
 
 ### Implementation for User Story 2
 
-- [ ] T008 [US2] Verify/adjust `packages/frontend/src/components/TodoCard.js` so the overdue indicator recomputes from `isOverdue` on every render (driven by the `completed` prop) and requires no persisted overdue field or extra state; make only the minimal change needed for the T007 tests to pass (FR-004, FR-007)
+- [X] T008 [US2] Verify/adjust `packages/frontend/src/components/TodoCard.js` so the overdue indicator recomputes from `isOverdue` on every render (driven by the `completed` prop) and requires no persisted overdue field or extra state; make only the minimal change needed for the T007 tests to pass (FR-004, FR-007)
 
 **Checkpoint**: User Stories 1 AND 2 both work independently
 
@@ -92,8 +92,8 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 **Purpose**: Final validation and quality gates
 
-- [ ] T009 [P] Run the frontend test suite and confirm coverage stays at/above the 80% threshold: `npm test --workspace packages/frontend` (quickstart.md, Constitution II)
-- [ ] T010 Execute the manual validation and accessibility checks in `specs/001-overdue-todos/quickstart.md` (todos A–E table, toggle behavior, screen-reader `aria-label`, light/dark contrast) confirming FR-001–FR-007 and SC-001–SC-004
+- [X] T009 [P] Run the frontend test suite and confirm coverage stays at/above the 80% threshold: `npm test --workspace packages/frontend` (quickstart.md, Constitution II)
+- [X] T010 Execute the manual validation and accessibility checks in `specs/001-overdue-todos/quickstart.md` (todos A–E table, toggle behavior, screen-reader `aria-label`, light/dark contrast) confirming FR-001–FR-007 and SC-001–SC-004
 
 ---
 
