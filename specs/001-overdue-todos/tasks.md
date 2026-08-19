@@ -53,18 +53,18 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 ## Phase 3: User Story 1 - Identify overdue todos at a glance (Priority: P1) 🎯 MVP
 
-**Goal**: Incomplete todos whose due date is before today are visually distinguished in the list via a warning icon with a descriptive `aria-label` plus accent-color styling; todos due today, in the future, or with no due date are not marked.
+**Goal**: Incomplete todos whose due date is before today are visually distinguished in the list via a warning icon with a descriptive `aria-label` plus danger-color styling (the `--danger-color` token); todos due today, in the future, or with no due date are not marked.
 
 **Independent Test**: Load a list with one incomplete todo due yesterday, one due today, one due tomorrow, and one with no due date; confirm only the yesterday todo shows the overdue indicator.
 
 ### Tests for User Story 1 (write FIRST, ensure they FAIL before implementation) ⚠️
 
-- [ ] T004 [P] [US1] Add `TodoCard` overdue-rendering tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: an incomplete todo due yesterday renders a warning icon with an `aria-label` (e.g. "Overdue") and the `todo-card--overdue` class; incomplete todos due today, due tomorrow, and with no due date render NO overdue icon and NO overdue class. Use a fixed reference date for determinism (FR-002/FR-003/FR-005/FR-006).
+- [ ] T004 [P] [US1] Add `TodoCard` overdue-rendering tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: an incomplete todo due yesterday renders a warning icon with `aria-label="Overdue"` and the `todo-card--overdue` class; incomplete todos due today, due tomorrow, and with no due date render NO overdue icon and NO overdue class. Use a fixed reference date for determinism (FR-002/FR-003/FR-005/FR-006).
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Modify `packages/frontend/src/components/TodoCard.js` to import `isOverdue` from `../utils/isOverdue`, compute overdue state at render time, and when true render a warning icon (e.g. `⚠`) with a descriptive `aria-label` (e.g. `aria-label="Overdue"`) and apply the `todo-card--overdue` class; when false render neither (FR-005, FR-006; contracts/overdue-ui.md component contract)
-- [ ] T006 [P] [US1] Add `todo-card--overdue` accent/danger styling in `packages/frontend/src/styles/theme.css` (and/or `packages/frontend/src/App.css` if card styles live there) using existing `--danger-color` / `--color-accent` design tokens, supporting light and dark themes with WCAG AA contrast (FR-005, FR-006, SC-004)
+- [ ] T005 [US1] Modify `packages/frontend/src/components/TodoCard.js` to import `isOverdue` from `../utils/isOverdue`, compute overdue state at render time, and when true render a warning icon (`⚠`) with `aria-label="Overdue"` and apply the `todo-card--overdue` class; when false render neither (FR-005, FR-006; contracts/overdue-ui.md component contract)
+- [ ] T006 [P] [US1] Add the `.todo-card--overdue` rule in `packages/frontend/src/App.css` (where the existing `.todo-card` rules live) using the existing `--danger-color` design token defined in `packages/frontend/src/styles/theme.css`, supporting light and dark themes with WCAG AA contrast (FR-005, FR-006, SC-004)
 
 **Checkpoint**: User Story 1 fully functional — overdue incomplete todos are visually distinguished and testable independently (MVP complete)
 
@@ -78,7 +78,7 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 
 ### Tests for User Story 2 (write FIRST, ensure they FAIL before implementation) ⚠️
 
-- [ ] T007 [P] [US2] Add `TodoCard` completion-transition tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: a completed todo with a past due date renders NO overdue indicator; re-rendering the same past-due todo with `completed` toggled true→removes the indicator and false→restores it (FR-004, SC-003, US2 acceptance scenarios #1–#3)
+- [ ] T007 [P] [US2] Add `TodoCard` transition tests in `packages/frontend/src/components/__tests__/TodoCard.test.js`: a completed todo with a past due date renders NO overdue indicator; re-rendering the same past-due todo with `completed` toggled true→removes the indicator and false→restores it; additionally, re-rendering an incomplete todo whose `dueDate` changes from today/future to a past date adds the indicator (and changing it back to today/future/null removes it), covering FR-007's due-date recompute path (FR-004, FR-007, SC-003, US2 acceptance scenarios #1–#3)
 
 ### Implementation for User Story 2
 
@@ -132,7 +132,7 @@ description: "Task list for feature implementation: Support for Overdue Todo Ite
 ```bash
 # After Foundational (Phase 2) is complete, within User Story 1:
 Task: "T004 [P] [US1] Add TodoCard overdue-rendering tests in packages/frontend/src/components/__tests__/TodoCard.test.js"
-Task: "T006 [P] [US1] Add todo-card--overdue styling in packages/frontend/src/styles/theme.css"
+Task: "T006 [P] [US1] Add .todo-card--overdue styling in packages/frontend/src/App.css"
 # Then implement T005 (TodoCard.js) to make the tests pass.
 ```
 

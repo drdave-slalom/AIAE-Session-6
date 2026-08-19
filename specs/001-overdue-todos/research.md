@@ -45,8 +45,8 @@ no open `NEEDS CLARIFICATION` items. This document records the key decisions.
 ## Decision 4: Visual indicator form (icon + aria-label + accent color)
 
 - **Decision**: Render a warning icon (e.g. `⚠`) inside each overdue `TodoCard` with a
-  descriptive `aria-label` (e.g. `Overdue`) and accent-color styling using the existing
-  `--color-accent` / `--danger-color` design tokens.
+  descriptive `aria-label` (e.g. `Overdue`) and danger-color styling using the existing
+  `--danger-color` design token.
 - **Rationale**: FR-006 and SC-004 require the cue to be conveyed beyond color alone; the
   clarification session selected an icon with `aria-label` plus accent color. Reusing
   existing tokens preserves design-system fidelity (Constitution IV) and light/dark support.

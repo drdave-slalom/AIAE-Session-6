@@ -44,9 +44,9 @@ When `isOverdue(todo)` is `true`, the rendered card MUST:
 1. Display a warning icon (e.g. `⚠`) within the card.
 2. Provide a descriptive accessible name for the indicator via `aria-label`
    (e.g. `aria-label="Overdue"`), so screen readers announce the state (FR-006).
-3. Apply accent/danger-color styling via existing design tokens (`--danger-color` /
-   `--color-accent`) using a CSS class (e.g. `todo-card--overdue`), supporting light/dark
-   themes and WCAG AA contrast (FR-005, FR-006, SC-004).
+3. Apply danger-color styling via the existing `--danger-color` design token using a CSS
+   class (`todo-card--overdue`) added to `App.css` (where the existing `.todo-card` rules
+   live), supporting light/dark themes and WCAG AA contrast (FR-005, FR-006, SC-004).
 
 When `isOverdue(todo)` is `false`, the card MUST NOT render the overdue icon or apply the
 overdue styling class.

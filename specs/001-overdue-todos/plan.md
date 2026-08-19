@@ -11,8 +11,9 @@ incomplete AND its due date is earlier than the current local calendar date. Tod
 today, in the future, without a due date, or already completed are never overdue. The
 overdue state is derived at render time (not persisted) via a small shared frontend
 utility, and surfaced on each `TodoCard` as a warning icon with a descriptive
-`aria-label` plus accent-color styling, so the cue is perceivable without relying on
-color alone. No backend, data model, or API changes are required.
+`aria-label` plus danger-color styling (the existing `--danger-color` token), so the cue
+is perceivable without relying on color alone. No backend, data model, or API changes are
+required.
 
 ## Technical Context
 
@@ -47,8 +48,8 @@ color alone. No backend, data model, or API changes are required.
 - **III. Simplicity & Scope Discipline**: PASS — Adds only the requested visual distinction.
   No sorting, filtering, notifications, or new persisted fields. Derived-at-view-time keeps
   it minimal (YAGNI).
-- **IV. Design System Fidelity & Accessibility**: PASS — Uses existing accent color tokens,
-  icon with descriptive `aria-label`, meets WCAG AA and non-color-dependency (FR-006/SC-004).
+- **IV. Design System Fidelity & Accessibility**: PASS — Uses the existing `--danger-color`
+  design token, icon with descriptive `aria-label`, meets WCAG AA and non-color-dependency (FR-006/SC-004).
 - **V. Reliable Persistence & Graceful Error Handling**: PASS — No new persistence path;
   existing create/update/toggle flows and confirmation dialogs are unchanged. Overdue
   computation uses guard clauses for missing/invalid due dates.
@@ -78,22 +79,25 @@ specs/001-overdue-todos/
 packages/frontend/
 ├── src/
 │   ├── components/
-│   │   ├── TodoCard.js                 # MODIFIED: render overdue icon + aria-label + accent styling
+│   │   ├── TodoCard.js                 # MODIFIED: render overdue icon + aria-label + danger styling
 │   │   └── __tests__/
 │   │       └── TodoCard.test.js        # MODIFIED: overdue rendering behavior tests
 │   ├── utils/
 │   │   ├── isOverdue.js                # NEW: derive overdue state from todo + current date
 │   │   └── __tests__/
-│   │       └── isOverdue.test.js       # NEW: boundary/edge-case unit tests
-│   └── styles/
-│       └── theme.css                   # MODIFIED (if needed): overdue accent styling tokens
+│   │       └── isOverdue.test.js        # NEW: boundary/edge-case unit tests
+│   ├── styles/
+│   │   └── theme.css                   # UNCHANGED: reuses the existing --danger-color token
+│   └── App.css                         # MODIFIED: add .todo-card--overdue danger styling (light/dark, WCAG AA)
 └── (backend unchanged)
 ```
 
 **Structure Decision**: Web application monorepo. This feature is frontend-only. It adds a
 shared `utils/isOverdue.js` (per the constitution's prescribed `utils/` directory) and
-updates the `TodoCard` presentation and styles. The backend, API, and stored data model
-are unchanged because overdue is a derived, view-time characteristic.
+updates the `TodoCard` presentation and its styles (the `.todo-card--overdue` rule is added
+to `App.css`, alongside the existing `.todo-card` rules, reusing the `--danger-color` token
+from `theme.css`). The backend, API, and stored data model are unchanged because overdue is
+a derived, view-time characteristic.
 
 ## Complexity Tracking
 

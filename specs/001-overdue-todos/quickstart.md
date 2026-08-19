@@ -35,7 +35,7 @@ Coverage remains at or above the 80% threshold.
 
 | Todo | Expectation                                                        | Requirement |
 |------|--------------------------------------------------------------------|-------------|
-| A    | Shows the overdue warning icon with `aria-label` + accent styling  | FR-001/005/006 |
+| A    | Shows the overdue warning icon with `aria-label` + danger-color styling  | FR-001/005/006 |
 | B    | No overdue indicator                                               | FR-002      |
 | C    | No overdue indicator                                               | FR-001      |
 | D    | No overdue indicator                                               | FR-003      |
